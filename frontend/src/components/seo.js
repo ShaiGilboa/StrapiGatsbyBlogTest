@@ -10,7 +10,7 @@ import PropTypes from "prop-types"
 import { Helmet } from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
 
-function SEO({ description, lang, meta, title }) {
+function SEO({ description, lang, meta, title, link, script }) {
   const { site } = useStaticQuery(
     graphql`
       query {
@@ -24,6 +24,7 @@ function SEO({ description, lang, meta, title }) {
       }
     `
   )
+  console.log('site',site)
 
   const metaDescription = description || site.siteMetadata.description
 
@@ -32,7 +33,7 @@ function SEO({ description, lang, meta, title }) {
       htmlAttributes={{
         lang,
       }}
-      title={title}
+      title={site.siteMetadata.title}
       titleTemplate={`%s | ${site.siteMetadata.title}`}
       meta={[
         {
@@ -41,7 +42,7 @@ function SEO({ description, lang, meta, title }) {
         },
         {
           property: `og:title`,
-          content: title,
+          content: site.siteMetadata.title,
         },
         {
           property: `og:description`,
@@ -61,7 +62,7 @@ function SEO({ description, lang, meta, title }) {
         },
         {
           name: `twitter:title`,
-          content: title,
+          content: site.siteMetadata.title,
         },
         {
           name: `twitter:description`,
@@ -76,13 +77,39 @@ SEO.defaultProps = {
   lang: `en`,
   meta: [],
   description: ``,
+  link: [
+    {
+      rel: "stylesheet",
+      href: "https://fonts.googleapis.com/css?family=Staatliches",
+    },
+    {
+      rel: "stylesheet",
+      href:
+        "https://cdn.jsdelivr.net/npm/uikit@3.2.3/dist/css/uikit.min.css",
+    },
+  ],
+  script: [
+    {
+      src:
+        "https://cdnjs.cloudflare.com/ajax/libs/uikit/3.2.0/js/uikit.min.js",
+    },
+    {
+      src:
+        "https://cdn.jsdelivr.net/npm/uikit@3.2.3/dist/js/uikit-icons.min.js",
+    },
+    {
+      src: "https://cdnjs.cloudflare.com/ajax/libs/uikit/3.2.0/js/uikit.js",
+    },
+  ]
 }
 
-SEO.propTypes = {
-  description: PropTypes.string,
-  lang: PropTypes.string,
-  meta: PropTypes.arrayOf(PropTypes.object),
-  title: PropTypes.string.isRequired,
-}
+// SEO.propTypes = {
+//   description: PropTypes.string,
+//   lang: PropTypes.string,
+//   meta: PropTypes.arrayOf(PropTypes.object),
+//   title: PropTypes.string.isRequired,
+//   link: PropTypes.arrayOf(PropTypes.object),
+//   script: PropTypes.arrayOf(PropTypes.object),
+// }
 
 export default SEO
