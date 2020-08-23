@@ -30,8 +30,9 @@ const Nav = () => (
                   }
                 }
               `}
-              render={data =>
-                data.allStrapiCategory.edges.map((category, i) => {
+              render={data =>{
+                console.log('data',data)
+                return data.allStrapiCategory.edges.map((category, i) => {
                   console.log('categpry',category.node.name)
                   return (
                     <li key={category.node.strapiId}>
@@ -41,6 +42,7 @@ const Nav = () => (
                     </li>
                   )
                 })
+              }
               }
             />
           </ul>
